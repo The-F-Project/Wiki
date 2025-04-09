@@ -3,52 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduCA</title>
-    <link rel="stylesheet" href="styleapp.css">
+    <title>Educa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
     <style>
-      
-        @font-face {
-            font-family: "Apple Legacy Chevron";
-            font-style: normal;
-            font-weight: 400;
-            src: local("\f8ff"), url("../assets/ac-footer/legacy/appleicons_text.woff") format("woff"), url("../assets/ac-footer/legacy/appleicons_text.ttf") format("truetype");
-        }
-        @font-face {
-            font-family: "Russo One";
-            font-style: normal;
-            font-weight: 400;
-            src: url("https://fonts.gstatic.com/s/russoone/v12/Z9XUDmZRWg6M1LvRYsGZf1Uqq3dVd-KKNvY.ttf") format("truetype");
-        }
        
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --header-bg: #f8f9fa;
+            --nav-hover: #e9ecef;
+            --theme-btn: #333333;
+            --active-tab: #007bff;
+            --banner-bg: #c4c3c2;
+            --banner-text-color: #333;
+        }
+
+        .dark-theme {
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --header-bg: #2d2d2d;
+            --nav-hover: #3d3d3d;
+            --theme-btn: #f0f0f0;
+            --active-tab: #4da3ff;
+            --banner-bg: #333;
+            --banner-text-color: #f0f0f0;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Russo One', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Шапка */
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+
+        /* Навигация */
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 0.8rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        nav ul li a.active {
+            background-color: var(--active-tab);
+            color: white !important;
+        }
+
+        nav ul li a:hover {
+            background-color: var(--nav-hover);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--theme-btn);
+            padding: 0.5rem;
+        }
+
+        /* Баннер */
+        .download-banner {
+    background-color: var(--banner-bg);
+    color: var(--banner-text-color);
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;  /* Чтобы высота подстраивалась под контент */
+}
+
+        .download-banner a {
+            background-color: var(--active-tab);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 1rem;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        /* Контент */
+        .content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-grow: 1;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Адаптация */
+        @media (max-width: 768px) {
+            header {
+                gap: 0.5rem;
+                padding: 0.8rem;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            nav ul li a {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .download-banner {
+                font-size: 1rem;
+            }
+
+            .download-banner a {
+                padding: 0.6rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 1rem;
+            }
+
+            nav ul {
+                gap: 0.4rem;
+            }
+
+            nav ul li a {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
     </style>
-
 </head>
-<body style="background-color: #3a3635;">
-<div class="app-card">
-    <div class="app-banner">
-        <img src="ad1.png" alt="Баннер приложения">
-    </div>
-    <div class="app-info">
-        <div class="app-icon">
-            <img src="icon.png" alt="Иконка приложения">
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="educalogo.jpg" alt="Educa Logo" class="logo-img">
+            <span class="logo-text">Educa</span>
         </div>
-        <h1 class="app-title">EduCA</h1>
-        <p class="app-description">EduCA - простая программа, сосредоточенная на ускоренном доступе к справочным материалам и решебникам
+        <nav>
+            <ul>
+                <li><a class="active" onclick="toggleTab(event, 'home')">Главная</a></li>
+                <li><a onclick="toggleTab(event, 'about-us')">О нас</a></li>
+                <li><a onclick="toggleTab(event, 'news')">Новости</a></li>
+                <li><a onclick="toggleTab(event, 'contacts')">Контакты</a></li>
+                <li>
+                    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-            Программа актуальна только для школьников РБ<br>
+    <main class="content">
+        <div id="home" class="tab-content active">
+            <h2>Добро пожаловать в Educa!</h2>
+            <p>Лучшая платформа для онлайн-образования с интерактивными курсами.</p>
+            <div class="download-banner">
+                <h3>Скачайте Educa прямо сейчас!</h3>
+                <p>Получите последнюю версию нашего приложения и начните обучение уже сегодня.</p>
+                <a href="educa_setup.exe" download>Скачать для Android
+                </a>
+            </div>
+        </div>
 
-            Разрабатывается мной The Falied Ded Так же называюсь как The F Project<br>
+        <div id="about-us" class="tab-content">
+            <h2>О нас</h2>
+            <p>Компания Educa - лидер в сфере EdTech с 2020 года.</p>
+        </div>
 
-            Программа актуальна и полезна только школьникам на территории РБ<br>
+        <div id="news" class="tab-content">
+            <h2>Новости</h2>
+            <div class="news-container">
+                <!-- Новости здесь -->
+            </div>
+        </div>
 
-            Просьба отнестись к проблемам, недоработкам с пониманием<br>
+        <div id="contacts" class="tab-content">
+            <h2>Контакты</h2>
+            <p>Email: support@educa.ru<br>Телефон: +7 (495) 123-45-67<br>Адрес: Москва, ул. Образовательная, 15</p>
+        </div>
 
-        </p>
-       <button class="download-button" onclick="window.location.href='https://github.com/The-F-Project/EduCA/releases/download/v2.2/EduCA-v2.2.apk'">
-    Скачать приложение
-</button>
+        <div id="download" class="tab-content">
+            <h2>Скачать Educa</h2>
+            <p>Версия 2.1.4 (150 MB)</p>
+            <a href="educa_setup.exe" download class="download-btn">Скачать для Windows</a>
+        </div>
+    </main>
 
-</div>
-<script src="script.js"></script>
+    <script>
+
+        function toggleTab(event, tabId) {
+          
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+      
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+
+           
+            document.getElementById(tabId).classList.add('active');
+            
+           
+            event.target.classList.add('active');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+     
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-theme');
+        }
+    </script>
 </body>
 </html>
