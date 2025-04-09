@@ -2,20 +2,18 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Educa</title>
+    <link rel="icon" type="image/jpeg" href="educalogo.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
     <style>
-       
         :root {
             --bg-color: #ffffff;
             --text-color: #333333;
             --header-bg: #f8f9fa;
             --nav-hover: #e9ecef;
-            --theme-btn: #333333;
             --active-tab: #007bff;
-            --banner-bg: #c4c3c2;
-            --banner-text-color: #333;
+            --icon-size: 24px;
         }
 
         .dark-theme {
@@ -23,10 +21,7 @@
             --text-color: #f0f0f0;
             --header-bg: #2d2d2d;
             --nav-hover: #3d3d3d;
-            --theme-btn: #f0f0f0;
             --active-tab: #4da3ff;
-            --banner-bg: #333;
-            --banner-text-color: #f0f0f0;
         }
 
         body {
@@ -34,29 +29,28 @@
             font-family: 'Russo One', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            transition: background-color 0.15s, color 0.15s;
         }
 
-        /* Шапка */
         header {
+            user-select: none;
+            -webkit-user-select: none;
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
+            padding: 0.5rem 1rem;
             background-color: var(--header-bg);
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
+            gap: 1rem;
         }
 
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.8rem;
         }
 
         .logo-img {
@@ -65,129 +59,181 @@
         }
 
         .logo-text {
-            font-size: 1.5rem;
-            color: var(--text-color);
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: bold;
             white-space: nowrap;
         }
 
-        /* Навигация */
         nav ul {
             display: flex;
             list-style: none;
             margin: 0;
             padding: 0;
             gap: 0.8rem;
+            align-items: center;
         }
 
-        nav ul li a {
+        nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 2rem;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             color: var(--text-color);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: all 0.3s;
-            font-size: 1rem;
-            white-space: nowrap;
+            background: rgba(255,255,255,0.1);
         }
 
-        nav ul li a.active {
+        nav a.active {
             background-color: var(--active-tab);
             color: white !important;
         }
 
-        nav ul li a:hover {
+        nav a:hover {
             background-color: var(--nav-hover);
         }
 
+        .nav-icon {
+            width: var(--icon-size);
+            height: var(--icon-size);
+            filter: invert(20%);
+            flex-shrink: 0;
+        }
+
+        .dark-theme .nav-icon {
+            filter: invert(90%);
+        }
+
         .theme-toggle {
-            background: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--active-tab);
             border: none;
-            font-size: 1.2rem;
             cursor: pointer;
-            color: var(--theme-btn);
-            padding: 0.5rem;
-        }
-
-        /* Баннер */
-        .download-banner {
-    background-color: var(--banner-bg);
-    color: var(--banner-text-color);
-    padding: 1.5rem;
-    text-align: center;
-    font-size: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: auto;  /* Чтобы высота подстраивалась под контент */
-}
-
-        .download-banner a {
-            background-color: var(--active-tab);
             color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 1rem;
-            margin-top: 1rem;
-            display: inline-block;
         }
 
-        /* Контент */
         .content {
             padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
-            flex-grow: 1;
-            width: 100%;
-            box-sizing: border-box;
         }
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.5s;
+            opacity: 0;
+            transform: translateY(3px);
+            animation: fadeIn 0.15s ease forwards;
         }
 
-        .tab-content.active {
-            display: block;
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Адаптация */
+        .download-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--header-bg);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .download-btn {
+            background: var(--active-tab);
+            color: white !important;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: transform 0.15s;
+        }
+
+        .news-item {
+            background: var(--header-bg);
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.15s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .news-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            position: relative;
+            background: rgba(var(--header-bg), 0.95);
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: var(--active-tab);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+
         @media (max-width: 768px) {
             header {
+                padding: 0.5rem;
                 gap: 0.5rem;
-                padding: 0.8rem;
             }
-
+            
+            nav a span {
+                display: none;
+            }
+            
+            nav a {
+                padding: 0.5rem;
+            }
+            
             .logo-text {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
-
-            nav ul li a {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
-            }
-
-            .download-banner {
-                font-size: 1rem;
-            }
-
-            .download-banner a {
-                padding: 0.6rem 1.2rem;
+            
+            .logo-img {
+                height: 32px;
             }
         }
 
         @media (max-width: 480px) {
-            .logo-text {
-                font-size: 1rem;
+            .content {
+                padding: 1rem;
             }
-
-            nav ul {
-                gap: 0.4rem;
-            }
-
-            nav ul li a {
-                font-size: 0.8rem;
-                padding: 0.3rem 0.6rem;
+            
+            .download-section {
+                padding: 1.5rem;
             }
         }
     </style>
@@ -200,10 +246,41 @@
         </div>
         <nav>
             <ul>
-                <li><a class="active" onclick="toggleTab(event, 'home')">Главная</a></li>
-                <li><a onclick="toggleTab(event, 'about-us')">О нас</a></li>
-                <li><a onclick="toggleTab(event, 'news')">Новости</a></li>
-                <li><a onclick="toggleTab(event, 'contacts')">Контакты</a></li>
+                <li>
+                    <a class="active" onclick="toggleTab(event, 'home')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M12 2L2 12h3v8h6v-6h2v6h6v-8h3L12 2z'/%3E%3C/svg%3E" 
+                             class="nav-icon" alt="Главная">
+                        <span>Главная</span>
+                    </a>
+                </li>
+                <li>
+                    <a onclick="toggleTab(event, 'about')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E" 
+                             class="nav-icon" alt="О нас">
+                        <span>О нас</span>
+                    </a>
+                </li>
+                <li>
+                    <a onclick="toggleTab(event, 'news')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z'/%3E%3C/svg%3E" 
+                             class="nav-icon" alt="Новости">
+                        <span>Новости</span>
+                    </a>
+                </li>
+                <li>
+                    <a onclick="toggleTab(event, 'contacts')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E" 
+                             class="nav-icon" alt="Контакты">
+                        <span>Контакты</span>
+                    </a>
+                </li>
+                <li>
+                    <a onclick="toggleTab(event, 'help')">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z'/%3E%3C/svg%3E"
+                             class="nav-icon" alt="Справка">
+                        <span>Справка</span>
+                    </a>
+                </li>
                 <li>
                     <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
                 </li>
@@ -214,66 +291,112 @@
     <main class="content">
         <div id="home" class="tab-content active">
             <h2>Добро пожаловать в Educa!</h2>
-            <p>Лучшая платформа для онлайн-образования с интерактивными курсами.</p>
-            <div class="download-banner">
-                <h3>Скачайте Educa прямо сейчас!</h3>
-                <p>Получите последнюю версию нашего приложения и начните обучение уже сегодня.</p>
-                <a href="educa_setup.exe" download>Скачать для Android
-                </a>
+            <p>ждун</p>
+            
+            <div class="download-section">
+                <h3>Скачайте наше приложение</h3>
+                <p>Версия 3.1.0 | Windows/macOS/Linux | 150 MB</p>
+                <a href="educa_setup.exe" download class="download-btn">Скачать сейчас</a>
             </div>
         </div>
 
-        <div id="about-us" class="tab-content">
+        <div id="about" class="tab-content">
             <h2>О нас</h2>
-            <p>Компания Educa - лидер в сфере EdTech с 2020 года.</p>
+            <p>грызть какашки. Мы предлагаем:</p>
+            <ul>
+                <li>рис</li>
+                <li>я хочу</li>
+                <li>нет</li>
+            </ul>
         </div>
 
         <div id="news" class="tab-content">
-            <h2>Новости</h2>
-            <div class="news-container">
-                <!-- Новости здесь -->
+            <h2>Последние новости</h2>
+            
+            <div class="news-item" data-fulltext="🔥 Новый курс по машинному обучению! Изучите Python, нейронные сети и анализ данных за 3 месяца. Старт 15 июля.">
+                <div class="news-date">01.07.2024</div>
+                <h3>пусто</h3>
+                <p>тут пока ничего нет</p>
+            </div>
+
+            <div class="news-item" data-fulltext="🎉 Educa 4.0 уже здесь! Новый интерфейс, оффлайн-режим и улучшенная система тестирования.">
+                <div class="news-date">25.06.2024</div>
+                <h3>я хз че тут писать</h3>
+                <p>Вдайте миску риса</p>
             </div>
         </div>
 
         <div id="contacts" class="tab-content">
             <h2>Контакты</h2>
-            <p>Email: support@educa.ru<br>Телефон: +7 (495) 123-45-67<br>Адрес: Москва, ул. Образовательная, 15</p>
+            <div class="contact-info">
+                <p>📧</p>
+                <p>6</p>
+                <p>5</p>
+                <p>1</p>
+            </div>
         </div>
 
-        <div id="download" class="tab-content">
-            <h2>Скачать Educa</h2>
-            <p>Версия 2.1.4 (150 MB)</p>
-            <a href="educa_setup.exe" download class="download-btn">Скачать для Windows</a>
+        <div id="help" class="tab-content">
+            <h2>Справка и поддержка</h2>
+            <div class="help-section">
+                <p>📚 3</p>
+                <p>✉️ 2</p>
+                <p>1</p>
+            </div>
+        </div>
+
+        <div class="news-modal">
+            <div class="modal-content">
+                <button class="close-modal">×</button>
+                <h2 class="modal-title"></h2>
+                <div class="modal-date"></div>
+                <p class="modal-text"></p>
+            </div>
         </div>
     </main>
 
     <script>
-
         function toggleTab(event, tabId) {
-          
             document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
                 tab.classList.remove('active');
             });
-
-      
+            
             document.querySelectorAll('nav a').forEach(link => {
                 link.classList.remove('active');
             });
 
-           
-            document.getElementById(tabId).classList.add('active');
-            
-           
-            event.target.classList.add('active');
+            const activeTab = document.getElementById(tabId);
+            activeTab.style.display = 'block';
+            activeTab.classList.add('active');
+            event.target.closest('a').classList.add('active');
         }
 
         function toggleTheme() {
             document.body.classList.toggle('dark-theme');
-            const isDark = document.body.classList.contains('dark-theme');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
         }
 
-     
+        document.querySelectorAll('.news-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const modal = document.querySelector('.news-modal');
+                modal.querySelector('.modal-title').textContent = item.querySelector('h3').textContent;
+                modal.querySelector('.modal-date').textContent = item.querySelector('.news-date').textContent;
+                modal.querySelector('.modal-text').textContent = item.dataset.fulltext;
+                modal.style.display = 'block';
+            });
+        });
+
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            document.querySelector('.news-modal').style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if(e.target.classList.contains('news-modal')) {
+                document.querySelector('.news-modal').style.display = 'none';
+            }
+        });
+
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-theme');
         }
